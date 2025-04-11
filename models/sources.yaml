@@ -1,0 +1,6 @@
+version: 2
+
+sources:
+  - name: Raw_Anonymized
+    tables:
+      - name: Healthcare_Raw_Anonymized
