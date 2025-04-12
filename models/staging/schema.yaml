@@ -99,3 +99,45 @@ models:
               to: ref('stg_insurance_providers_dim')
               field: id_insurance_provider
 
+  - name: stg_admissions_fct
+    columns:
+      - name: id_admission
+        tests:
+          - not_null
+          - unique
+      - name: id_admission_date
+        tests:
+          - relationships:
+              to: ref('stg_dates_dim')
+              field: id_date
+      - name: id_discharge_date
+        tests:
+          - relationships:
+              to: ref('stg_dates_dim')
+              field: id_date
+      - name: id_room
+        tests:
+          - relationships:
+              to: ref('stg_rooms_dim')
+              field: id_room
+      - name: id_patient
+        tests:
+          - relationships:
+              to: ref('stg_patients_dim')
+              field: id_patient
+      - name: id_doctor
+        tests:
+          - relationships:
+              to: ref('stg_doctors_dim')
+              field: id_doctor
+      - name: id_treatment
+        tests:
+          - relationships:
+              to: ref('stg_treatments_dim')
+              field: id_treatment
+      - name: id_admission_type
+        tests:
+          - relationships:
+              to: ref('stg_admission_types_dim')
+              field: id_admission_type
+      - name: billing_amount
