@@ -26,3 +26,11 @@ models:
               config:
                 severity: warn
                 warn_if: ">0"
+
+  - name: stg_hospitals_dim
+    columns:
+      - name: id_hospital
+        tests:
+          - not_null
+          - unique
+      - name: name_hospital
