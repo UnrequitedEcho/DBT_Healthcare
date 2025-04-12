@@ -56,3 +56,13 @@ models:
           - unique
       - name: name_doctor
 
+  - name: stg_admission_types_dim
+    columns:
+      - name: id_admission_type
+        tests:
+          - not_null
+          - unique
+      - name: admission_type
+        tests:
+          - accepted_values:
+              values: ['Urgent', 'Emergency', 'Elective']
