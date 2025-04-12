@@ -12,3 +12,17 @@ models:
       - name: week_nb
       - name: quarter
       - name: year
+
+  - name: stg_insurance_providers_dim
+    columns:
+      - name: id_insurance_provider
+        tests:
+          - not_null
+          - unique
+      - name: name_insurance_provider
+        tests:
+          - accepted_values:
+              values: ['Cigna', 'Medicare', 'Blue Cross', 'UnitedHealthcare', 'Aetna']
+              config:
+                severity: warn
+                warn_if: ">0"
