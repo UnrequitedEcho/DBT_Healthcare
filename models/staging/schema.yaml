@@ -47,3 +47,12 @@ models:
               to: ref('stg_hopitals_dim')
               field: id_hospital
       - name: room_number
+
+  - name: stg_doctors_dim
+    columns:
+      - name: id_doctor
+        tests:
+          - not_null
+          - unique
+      - name: name_doctor
+
