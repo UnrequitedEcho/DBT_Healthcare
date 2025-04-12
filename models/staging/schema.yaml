@@ -34,3 +34,16 @@ models:
           - not_null
           - unique
       - name: name_hospital
+
+  - name: stg_rooms_dim
+    columns:
+      - name: id_room
+        tests:
+          - not_null
+          - unique
+      - name: id_hospital
+        tests: 
+          - relationships:
+              to: ref('stg_hopitals_dim')
+              field: id_hospital
+      - name: room_number
