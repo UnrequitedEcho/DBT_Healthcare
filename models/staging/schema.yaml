@@ -79,3 +79,23 @@ models:
           - accepted_values:
               values: ['Abnormal', 'Inconclusive', 'Normal']
       - name: medication
+
+  - name: stg_patient_dim
+    columns:
+      - name: id_patient
+        tests:
+          - not_null
+          - unique
+      - name: name_patient
+      - name: age
+      - name: gender # No accepted_values test 'cause it's 2025 !
+      - name: blood_type
+        tests:
+          - accepted_values:
+              values: ['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-']
+      - name: id_insurance_provider
+        tests:
+          - relationships:
+              to: ref('stg_insurance_providers_dim')
+              field: id_insurance_provider
+
