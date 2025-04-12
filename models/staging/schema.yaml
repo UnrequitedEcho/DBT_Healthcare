@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: stg_dates_dim
+    columns:
+      - name: id_date
+        tests:
+          - not_null
+          - unique
+      - name: day
+      - name: month
+      - name: week_nb
+      - name: quarter
+      - name: year
