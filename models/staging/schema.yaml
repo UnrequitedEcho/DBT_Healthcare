@@ -43,6 +43,7 @@ models:
           - unique
       - name: id_hospital
         tests: 
+          - not_null
           - relationships:
               to: ref('stg_hopitals_dim')
               field: id_hospital
@@ -95,6 +96,7 @@ models:
               values: ['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-']
       - name: id_insurance_provider
         tests:
+          - not_null
           - relationships:
               to: ref('stg_insurance_providers_dim')
               field: id_insurance_provider
@@ -107,36 +109,43 @@ models:
           - unique
       - name: id_admission_date
         tests:
+          - not_null
           - relationships:
               to: ref('stg_dates_dim')
               field: id_date
       - name: id_discharge_date
         tests:
+          - not_null
           - relationships:
               to: ref('stg_dates_dim')
               field: id_date
       - name: id_room
         tests:
+          - not_null
           - relationships:
               to: ref('stg_rooms_dim')
               field: id_room
       - name: id_patient
         tests:
+          - not_null
           - relationships:
               to: ref('stg_patients_dim')
               field: id_patient
       - name: id_doctor
         tests:
+          - not_null
           - relationships:
               to: ref('stg_doctors_dim')
               field: id_doctor
       - name: id_treatment
         tests:
+          - not_null
           - relationships:
               to: ref('stg_treatments_dim')
               field: id_treatment
       - name: id_admission_type
         tests:
+          - not_null
           - relationships:
               to: ref('stg_admission_types_dim')
               field: id_admission_type

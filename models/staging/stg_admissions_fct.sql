@@ -5,19 +5,19 @@ select
     (
         select d.id_date
         from {{ref("stg_dates_dim")}} d 
-        where concat(d.year, '-', d.month, '-', d.day) = r.Date_of_Admission
+        where date(concat(d.year, '-', d.month, '-', d.day)) = date(r.Date_of_Admission)
     ) as id_admission_date,
     (
         select d.id_date
         from {{ref("stg_dates_dim")}} d 
-        where concat(d.year, '-', d.month, '-', d.day) = r.Discharge_Date
+        where date(concat(d.year, '-', d.month, '-', d.day)) = date(r.Discharge_Date)
     ) as id_discharge_date,
     (
         select ro.id_room
         from {{ref("stg_rooms_dim")}} ro
             join {{ref("stg_hospitals_dim")}} h using(id_hospital)
         where ro.room_number = r.Room_Number 
-            and h.name_hospital = initcap(trim(r.Hospital, ','))
+            and h.name_hospital = r.Hospital
     ) as id_room,
     (
         select p.id_patient
@@ -44,5 +44,5 @@ select
         from {{ref("stg_admission_types_dim")}} adt
         where adt.admission_type = r.Admission_Type
     ) as id_admission_type,
-    r.Billing_Amount as billing_amount
+    round(r.Billing_Amount, 2) as billing_amount
 from {{source("Raw_Anonymized", "Healthcare_Raw_Anonymized")}} r

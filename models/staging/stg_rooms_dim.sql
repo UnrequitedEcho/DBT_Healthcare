@@ -4,4 +4,6 @@ select
     r.Room_Number as room_number
 from {{source("Raw_Anonymized", "Healthcare_Raw_Anonymized")}} r
     join {{ref("stg_hospitals_dim")}} h on h.name_hospital = r.Hospital
+group by id_hospital, room_number
+order by id_room
  
