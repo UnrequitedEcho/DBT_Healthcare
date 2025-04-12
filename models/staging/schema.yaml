@@ -66,3 +66,16 @@ models:
         tests:
           - accepted_values:
               values: ['Urgent', 'Emergency', 'Elective']
+
+  - name: stg_treatments_dim
+    columns:
+      - name: id_treatment
+        tests:
+          - not_null
+          - unique
+      - name: medical_condition
+      - name: test_result
+        tests:
+          - accepted_values:
+              values: ['Abnormal', 'Inconclusive', 'Normal']
+      - name: medication
