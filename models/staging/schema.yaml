@@ -1,0 +1,152 @@
+version: 2
+
+models:
+  - name: stg_dates_dim
+    columns:
+      - name: id_date
+        tests:
+          - not_null
+          - unique
+      - name: day
+      - name: month
+      - name: week_nb
+      - name: quarter
+      - name: year
+
+  - name: stg_insurance_providers_dim
+    columns:
+      - name: id_insurance_provider
+        tests:
+          - not_null
+          - unique
+      - name: name_insurance_provider
+        tests:
+          - accepted_values:
+              values: ['Cigna', 'Medicare', 'Blue Cross', 'UnitedHealthcare', 'Aetna']
+              config:
+                severity: warn
+                warn_if: ">0"
+
+  - name: stg_hospitals_dim
+    columns:
+      - name: id_hospital
+        tests:
+          - not_null
+          - unique
+      - name: name_hospital
+
+  - name: stg_rooms_dim
+    columns:
+      - name: id_room
+        tests:
+          - not_null
+          - unique
+      - name: id_hospital
+        tests: 
+          - not_null
+          - relationships:
+              to: ref('stg_hopitals_dim')
+              field: id_hospital
+      - name: room_number
+
+  - name: stg_doctors_dim
+    columns:
+      - name: id_doctor
+        tests:
+          - not_null
+          - unique
+      - name: name_doctor
+
+  - name: stg_admission_types_dim
+    columns:
+      - name: id_admission_type
+        tests:
+          - not_null
+          - unique
+      - name: admission_type
+        tests:
+          - accepted_values:
+              values: ['Urgent', 'Emergency', 'Elective']
+
+  - name: stg_treatments_dim
+    columns:
+      - name: id_treatment
+        tests:
+          - not_null
+          - unique
+      - name: medical_condition
+      - name: test_result
+        tests:
+          - accepted_values:
+              values: ['Abnormal', 'Inconclusive', 'Normal']
+      - name: medication
+
+  - name: stg_patient_dim
+    columns:
+      - name: id_patient
+        tests:
+          - not_null
+          - unique
+      - name: name_patient
+      - name: age
+      - name: gender # No accepted_values test 'cause it's 2025 !
+      - name: blood_type
+        tests:
+          - accepted_values:
+              values: ['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-']
+      - name: id_insurance_provider
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_insurance_providers_dim')
+              field: id_insurance_provider
+
+  - name: stg_admissions_fct
+    columns:
+      - name: id_admission
+        tests:
+          - not_null
+          - unique
+      - name: id_admission_date
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_dates_dim')
+              field: id_date
+      - name: id_discharge_date
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_dates_dim')
+              field: id_date
+      - name: id_room
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_rooms_dim')
+              field: id_room
+      - name: id_patient
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_patients_dim')
+              field: id_patient
+      - name: id_doctor
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_doctors_dim')
+              field: id_doctor
+      - name: id_treatment
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_treatments_dim')
+              field: id_treatment
+      - name: id_admission_type
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_admission_types_dim')
+              field: id_admission_type
+      - name: billing_amount
