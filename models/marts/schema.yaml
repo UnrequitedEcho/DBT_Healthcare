@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: mrt_doctor_efficiency
+    description: "Statistiques quantitatives uniquement sur l'efficacite de chaque docteur"
+    columns:
+      - name: name_doctor
+        tests:
+          - not_null
+        description: "nom du docteur"
+      - name: patients_count
+        description: "nombre de patients assignes"
+      - name: admissions_count
+        description: "nombre de patients traites (inclus les patients qui reviennent)"
+  
+  - name: mrt_treatment_duration
+    description: "Statistiques sur la duree moyenne de presence d'un patient a l'hopital"
+    columns:
+      - name: average
+        description: "duree moyenne du sejour en jours et heures"
+      - name: quartiles
+        description: "liste de donnees statistiques, dans l'ordre: min, 1er quartile, medianne, 3eme quartile, max"
+  
+  - name: mrt_treatment_time_per_medical_condition
+    description: "Duree moyenne de traitement par maladie"
+    columns:
+      - name: medical_condition
+        description: "nom de la maladie"
+        tests: 
+          - not_null
+      - name: average_treatment_time_in_days
+        description: "temps moyen de traitement en nombre de jours"
