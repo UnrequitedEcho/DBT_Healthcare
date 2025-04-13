@@ -8,7 +8,7 @@ with treatment_duration as
         join {{ref("stg_dates_dim")}} dd on dd.id_date = a.id_discharge_date
 )
 select
-    concat(floor(avg(td.duration)), 'days ', round((avg(td.duration)-floor(avg(td.duration)))*24, 0), 'hours'),
+    concat(floor(avg(td.duration)), ' days ', round((avg(td.duration)-floor(avg(td.duration)))*24, 0), ' hours'),
     round(avg(td.duration), 2) as average,
     APPROX_QUANTILES(td.duration, 4) as quartiles
 from treatment_duration td
